@@ -150,7 +150,7 @@ Ordinal: {{ .Ordinal}}
 						{{ end }}
 
 						{{ if $showExif }}
-							data-description="{{ .Model }} + {{ .LensModel }}<br/>{{ .FocalLength }}mm f/{{ .FNumber }} {{ .ExposureTime }}sec ISO {{ .ISOSpeedRatings }}"
+							data-description="<br/>{{ .FocalLength }}mm f/{{ .FNumber }} {{ .ExposureTime }}sec ISO {{ .ISOSpeedRatings }}"
 						{{ end }}
 
 						{{ if not (eq $filterOptions "[]")  }}
@@ -172,8 +172,11 @@ Ordinal: {{ .Ordinal}}
 							{{ end }}
 							class="lazy"
 							data-src="{{ $thumbnail.RelPermalink }}"
+						{{else if (eq $previewType "og" )}}
+							src="{{ $full.RelPermalink }}"
+
 						{{ else if (eq $previewType "color") }}
-							{{ $preview_1p := ($thumbnail.Resize ("1x1 box png")) }}
+							{{ $preview_1p := ($thumbnail.Resize ("600x600 lanczos png")) }}
 							{{ if $embedPreview }}
 								src="data:image/png;base64,{{ $preview_1p.Content | base64Encode }}"
 							{{ else }}
